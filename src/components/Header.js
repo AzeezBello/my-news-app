@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FaCalendarAlt, FaClock, FaUser, FaMapMarkerAlt, FaBookmark, FaSearch } from 'react-icons/fa'; // Import icons
 import { GiHamburgerMenu } from 'react-icons/gi'; // Import hamburger icon
 

@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+
 
 // Utility function to calculate time ago
 function getTimeAgo(dateString) {

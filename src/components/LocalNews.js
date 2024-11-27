@@ -1,6 +1,8 @@
 "use client";
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
+
 import CoverageBar from './CoverageBar'; // Import CoverageBar component
 
 // Utility function to calculate time ago
