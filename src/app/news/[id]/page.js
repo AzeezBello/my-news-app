@@ -1,6 +1,7 @@
 "use client"; // Enable client-side rendering for the component
 
 import Link from "next/link";
+import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import LeftSidebar from '../../../components/LeftSidebar';
 import RightSidebar from '../../../components/RightSidebar';

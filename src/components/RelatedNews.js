@@ -1,5 +1,6 @@
 "use client";
 import { FaBookmark } from "react-icons/fa";
+import Image from 'next/image';
 
 // Utility function to calculate time ago
 function getTimeAgo(dateString) {

@@ -1,6 +1,7 @@
 // components/Footer.js
 import { FaInstagram, FaTwitter } from 'react-icons/fa'; // Import icons
 import { SiX } from 'react-icons/si'; // Import the new Twitter (X) icon
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -59,7 +60,7 @@ export default function Footer() {
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <img src="http://127.0.0.1:8000/media/images/logo.png" alt="Logo" className="h-10" />
+            <Image src="http://127.0.0.1:8000/media/images/logo.png" alt="Logo" className="h-10" />
           </div>
 
           {/* Middle Links */}
