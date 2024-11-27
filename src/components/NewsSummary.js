@@ -7,7 +7,7 @@ export default function NewsSummary({ activeTab, setActiveTab }) {
   // Fetch news data whenever the activeTab changes
   useEffect(() => {
     // Define the base API URL
-    let url = 'http://127.0.0.1:8000/api/news/';
+    let url = 'http://newsapp-najw.onrender.com/api/news/';
 
     // Adjust the URL based on the selected tab
     if (activeTab === 'Last Day') {
