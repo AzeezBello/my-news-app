@@ -75,7 +75,7 @@ export default function NewsDetails({ params }) {
         <section className="col-span-6 bg-white p-6">
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
-              <img
+              <Image
                 src={article.image.startsWith('http') ? article.image : `http://127.0.0.1:8000${article.image}`}
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"

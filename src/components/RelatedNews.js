@@ -77,7 +77,7 @@ export default function RelatedNews({ articles }) {
             </div>
 
             {/* Image */}
-            <img
+            <Image
               src={news.image.startsWith('http') ? news.image : `http://127.0.0.1:8000${news.image}`}
               alt={news.title}
               className="w-full h-40 object-cover mt-4 rounded-md"

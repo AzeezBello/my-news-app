@@ -70,7 +70,7 @@ export default function TopNews() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         {mainNews && (
           <div className="col-span-2 relative">
-            <img
+            <Image
               src={mainNews.image?.startsWith('http') ? mainNews.image : `http://127.0.0.1:8000${mainNews.image}`}
               alt={mainNews.title}
               className="w-full h-96 object-cover rounded-md"
@@ -94,7 +94,7 @@ export default function TopNews() {
               </span>
               <h4 className="text-xl font-bold mt-2">{sideNews.title}</h4>
               <CoverageBar leftCoverage={38} sources={8} />
-              <img
+              <Image
                 src={sideNews.image?.startsWith('http') ? sideNews.image : `http://127.0.0.1:8000${sideNews.image}`}
                 alt={sideNews.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
@@ -114,7 +114,7 @@ export default function TopNews() {
               </span>
               <h5 className="text-lg font-bold mt-2">{item.title}</h5>
               <CoverageBar leftCoverage={50} sources={6} />
-              <img
+              <Image
                 src={item.image?.startsWith('http') ? item.image : `http://127.0.0.1:8000${item.image}`}
                 alt={item.title}
                 className="w-full h-32 object-cover mt-4 rounded-md"

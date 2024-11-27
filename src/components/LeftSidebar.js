@@ -21,7 +21,7 @@ export default function LeftSidebar({ articleId }) {
       <ExchangeRate />
 
       {/* Daily Index Section */}
-      {/* <DailyIndex indexValue={indexValue} sentiment={sentiment} /> */}
+      <DailyIndex indexValue={indexValue} sentiment={sentiment} />
 
       {/* Coverage Details Section */}
       <CoverageDetails

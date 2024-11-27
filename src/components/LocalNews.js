@@ -66,7 +66,7 @@ export default function LocalNews() {
               {/* Reusable CoverageBar Component */}
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
-              <img
+              <Image
                 src={article.image.startsWith('http') ? article.image : `http://127.0.0.1:8000${article.image}`}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"

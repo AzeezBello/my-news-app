@@ -76,7 +76,7 @@ export default function CategoryDetails({ params }) {
       {/* Category Header */}
       <div className="flex items-center mb-6">
         {category.image && (
-          <img
+          <Image
             src={
               category.image.startsWith("http")
                 ? category.image
@@ -95,7 +95,7 @@ export default function CategoryDetails({ params }) {
           posts.map((post) => (
             <div key={post.id} className="bg-white p-4 rounded-lg shadow-md">
               {/* Ensure image fallback */}
-              <img
+              <Image
                 src={
                   post.image && post.image.startsWith("http")
                     ? post.image

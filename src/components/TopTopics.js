@@ -16,7 +16,7 @@ export default function TopTopics({ topics }) {
           <Link key={index} href={`/categories/${topic.id}`} passHref>
             <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-lg transition-shadow duration-300">
               <div className="flex items-center space-x-3">
-                <img
+                <Image
                   src={topic.image ? (topic.image.startsWith('http') ? topic.image : `http://127.0.0.1:8000${topic.image}`) : '/placeholder-icon.png'}
                   alt={topic.name}
                   className="w-8 h-8 rounded-full object-cover"

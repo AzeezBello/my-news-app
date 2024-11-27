@@ -96,7 +96,7 @@ export default function StoryCoverage({ apiUrl }) {
             >
               {/* Source Name */}
               <div className="flex items-center mb-2">
-                <img
+                <Image
                   src={article.source_logo || "/placeholder-logo.png"}
                   alt={article.source}
                   className="w-6 h-6 rounded-full mr-2"

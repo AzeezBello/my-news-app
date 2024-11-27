@@ -69,7 +69,7 @@ export default function ExchangeRate() {
           {exchangeRates.map((rate, index) => (
             <tr key={index} className="border-b border-gray-300">
               <td className="py-2 flex items-center space-x-2">
-                <img
+                <Image
                   src={rate.flag}
                   alt={rate.currency}
                   className="w-6 h-4 object-cover rounded-sm"
