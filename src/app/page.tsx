@@ -17,7 +17,7 @@ export default function Home() {
     if (filters.category) query += `category=${filters.category}&`;
     if (filters.location) query += `location=${filters.location}&`;
 
-    fetch(`http://127.0.0.1:8000/api/news/?${query}`)
+    fetch(`https://my-news-app-gy7u.onrender.com/api/news/?${query}`)
       .then(response => response.json())
       .then(data => setNews(data));
   }, [filters]);
