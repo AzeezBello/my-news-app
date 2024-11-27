@@ -1,5 +1,5 @@
 // components/Footer.js
-import { FaInstagram, FaTwitter } from 'react-icons/fa'; // Import icons
+import { FaInstagram } from 'react-icons/fa'; // Import icons
 import { SiX } from 'react-icons/si'; // Import the new Twitter (X) icon
 import Image from 'next/image';
 
