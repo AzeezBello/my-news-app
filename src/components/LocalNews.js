@@ -20,6 +20,7 @@ function getTimeAgo(dateString) {
   }
 }
 
+
 export default function LocalNews() {
   const [news, setNews] = useState([]);
   const [fallbackNews, setFallbackNews] = useState([]);
