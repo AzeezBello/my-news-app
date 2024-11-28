@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import AskVTAI from './AskVTAI';
 import TopTopics from './TopTopics';
 import SimilarNewsTopics from './SimilarNewsTopics';
-import NewsSummary from './NewsSummary'; // Import NewsSummary component
 
 export default function RightSidebar() {
   const [activeTab, setActiveTab] = useState('Last Day');
@@ -13,7 +12,7 @@ export default function RightSidebar() {
 
   useEffect(() => {
     // Fetch categories from the API
-    fetch('http://127.0.0.1:8000/api/categories/')  // Adjust API URL as needed
+    fetch('https://my-news-app-gy7u.onrender.com/api/categories/')  // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
