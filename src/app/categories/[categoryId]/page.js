@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export async function generateStaticParams() {
-  const res = await fetch("http://127.0.0.1:8000/api/categories/");
+  const res = await fetch("https://newsapp-najw.onrender.com/api/categories/");
   if (!res.ok) {
     throw new Error("Failed to fetch categories");
   }
@@ -28,7 +28,7 @@ export default function CategoryDetails({ params }) {
   useEffect(() => {
     if (categoryId) {
       // Fetch category details first
-      fetch(`http://127.0.0.1:8000/api/categories/${categoryId}/`)
+      fetch(`https://newsapp-najw.onrender.com/api/categories/${categoryId}/`)
         .then((response) => {
           if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -43,7 +43,7 @@ export default function CategoryDetails({ params }) {
           if (articleIds && articleIds.length > 0) {
             Promise.all(
               articleIds.map((id) =>
-                fetch(`http://127.0.0.1:8000/api/news/${id}/`).then((res) =>
+                fetch(`https://newsapp-najw.onrender.com/api/news/${id}/`).then((res) =>
                   res.json()
                 )
               )
