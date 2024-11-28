@@ -1,8 +1,5 @@
-"use client"; // Enable client-side rendering
-
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
 import LeftSidebar from "../../../components/LeftSidebar";
 import RightSidebar from "../../../components/RightSidebar";
 import StoryCoverage from "../../../components/StoryCoverage";
@@ -16,56 +13,24 @@ function getTimeAgo(dateString) {
   const hoursAgo = Math.floor(timeDiff / (1000 * 60 * 60));
   const daysAgo = Math.floor(hoursAgo / 24);
 
-  if (daysAgo > 0) {
-    return `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
-  } else {
-    return `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
-  }
+  return daysAgo > 0
+    ? `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`
+    : `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
 }
 
-export default function NewsDetails({ params }) {
-  const { id: articleId } = params; // Dynamic parameter
-  const [article, setArticle] = useState(null);
-  const [relatedArticles, setRelatedArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default async function NewsDetails({ params }) {
+  const { id: articleId } = params;
 
-  useEffect(() => {
-    const fetchArticleDetails = async () => {
-      try {
-        const articleResponse = await fetch(
-          `https://newsapp-najw.onrender.com/api/news/${articleId}/`
-        );
-        if (!articleResponse.ok) {
-          throw new Error(`Failed to fetch article: ${articleResponse.statusText}`);
-        }
-        const articleData = await articleResponse.json();
-        setArticle(articleData);
+  // Fetch data on the server
+  const articleResponse = await fetch(`https://newsapp-najw.onrender.com/api/news/${articleId}/`);
+  const relatedResponse = await fetch(`https://newsapp-najw.onrender.com/api/news/${articleId}/related/`);
 
-        const relatedResponse = await fetch(
-          `https://newsapp-najw.onrender.com/api/news/${articleId}/related/`
-        );
-        if (!relatedResponse.ok) {
-          throw new Error(`Failed to fetch related articles`);
-        }
-        const relatedData = await relatedResponse.json();
-        setRelatedArticles(relatedData);
-      } catch (error) {
-        console.error("Error fetching article data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchArticleDetails();
-  }, [articleId]);
-
-  if (loading) {
-    return <p>Loading...</p>;
+  if (!articleResponse.ok) {
+    throw new Error("Failed to fetch article");
   }
 
-  if (!article) {
-    return <p>Article not found.</p>;
-  }
+  const article = await articleResponse.json();
+  const relatedArticles = await relatedResponse.json();
 
   return (
     <div>
@@ -78,15 +43,17 @@ export default function NewsDetails({ params }) {
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
               <Image
-                src={article.image.startsWith("http") ? article.image : `/default-image.jpg`}
+                src={article.image.startsWith("http") ? article.image : "/default-image.jpg"}
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"
               />
             )}
-            <p className="text-gray-600">{getTimeAgo(article.published_at)}, {article.location}</p>
+            <p className="text-gray-600">
+              {getTimeAgo(article.published_at)}, {article.location}
+            </p>
             <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
 
-            {article.tags && article.tags.length > 0 && (
+            {article.tags && (
               <div className="mt-1 mb-6">
                 <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag, index) => (
@@ -127,6 +94,7 @@ export default function NewsDetails({ params }) {
   );
 }
 
+// Predefine static paths
 export async function generateStaticParams() {
   const response = await fetch("https://newsapp-najw.onrender.com/api/news/");
   const articles = await response.json();
@@ -135,5 +103,3 @@ export async function generateStaticParams() {
     id: article.id.toString(),
   }));
 }
-
-export const dynamicParams = false;
