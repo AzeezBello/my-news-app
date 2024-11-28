@@ -1,105 +1,98 @@
 import Link from "next/link";
 import Image from "next/image";
-import LeftSidebar from "../../../components/LeftSidebar";
-import RightSidebar from "../../../components/RightSidebar";
-import StoryCoverage from "../../../components/StoryCoverage";
-import RelatedNews from "../../../components/RelatedNews";
 
-// Utility function to calculate time ago
-function getTimeAgo(dateString) {
-  const postedDate = new Date(dateString);
-  const now = new Date();
-  const timeDiff = Math.abs(now - postedDate);
-  const hoursAgo = Math.floor(timeDiff / (1000 * 60 * 60));
-  const daysAgo = Math.floor(hoursAgo / 24);
+// Generate static params for dynamic route
+export async function generateStaticParams() {
+  const res = await fetch("https://newsapp-najw.onrender.com/api/news/");
+  const newsArticles = await res.json();
 
-  return daysAgo > 0
-    ? `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`
-    : `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
+  return newsArticles.map((article) => ({
+    id: article.id.toString(),
+  }));
 }
 
+// Fetch data for individual article
 export default async function NewsDetails({ params }) {
-  const { id: articleId } = params;
+  const { id } = params;
 
-  // Fetch data on the server
-  const articleResponse = await fetch(`https://newsapp-najw.onrender.com/api/news/${articleId}/`);
-  const relatedResponse = await fetch(`https://newsapp-najw.onrender.com/api/news/${articleId}/related/`);
-
-  if (!articleResponse.ok) {
-    throw new Error("Failed to fetch article");
+  // Fetch article details
+  const articleRes = await fetch(`https://newsapp-najw.onrender.com/api/news/${id}/`);
+  if (!articleRes.ok) {
+    return <p>Article not found.</p>;
   }
+  const article = await articleRes.json();
 
-  const article = await articleResponse.json();
-  const relatedArticles = await relatedResponse.json();
+  // Fetch related news
+  const relatedRes = await fetch(`https://newsapp-najw.onrender.com/api/news/${id}/related/`);
+  const relatedArticles = relatedRes.ok ? await relatedRes.json() : [];
 
   return (
     <div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
-        <div className="col-span-3">
-          <LeftSidebar articleId={params.id} />
-        </div>
+        {/* Left Sidebar */}
+        <div className="col-span-3">Left Sidebar</div>
 
+        {/* Main Content */}
         <section className="col-span-6 bg-white p-6">
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
               <Image
-                src={article.image.startsWith("http") ? article.image : "/default-image.jpg"}
+                src={article.image}
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"
               />
             )}
-            <p className="text-gray-600">
-              {getTimeAgo(article.published_at)}, {article.location}
-            </p>
+            <p className="text-gray-600">{article.published_at}, {article.location}</p>
             <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
 
+            {/* Tags */}
             {article.tags && (
-              <div className="mt-1 mb-6">
-                <div className="flex flex-wrap gap-2">
-                  {article.tags.map((tag, index) => (
-                    <Link
-                      key={index}
-                      href={`/news?tag=${tag}`}
-                      className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"
-                    >
+              <div className="flex flex-wrap gap-2 mt-4">
+                {article.tags.map((tag, idx) => (
+                  <Link key={idx} href={`/news?tag=${tag}`}>
+                    <a className="bg-gray-200 px-3 py-1 rounded-full text-sm">
                       {tag}
-                    </Link>
-                  ))}
-                </div>
+                    </a>
+                  </Link>
+                ))}
               </div>
             )}
 
-            <h2 className="text-2xl font-bold mt-6">News summary</h2>
-            <div className="flex flex-col space-y-1 mb-1">
-              <div className="h-0.5 w-full bg-gray-700"></div>
-              <div className="h-0.5 w-full bg-gray-400"></div>
-              <div className="h-0.5 w-full bg-gray-200"></div>
-            </div>
-            <p className="mb-6">{article.content}</p>
+            <h2 className="text-2xl font-bold mt-6">News Summary</h2>
+            <p>{article.content}</p>
           </div>
-          <StoryCoverage />
         </section>
 
-        <div className="col-span-3">
-          <RightSidebar />
-        </div>
+        {/* Right Sidebar */}
+        <div className="col-span-3">Right Sidebar</div>
       </div>
 
+      {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <div className="mt-8">
-          <RelatedNews articles={relatedArticles} />
+          <h2 className="text-2xl font-bold mb-4">Related Articles</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {relatedArticles.map((related) => (
+              <div key={related.id} className="bg-white p-4 rounded-lg shadow-md">
+                <Image
+                  src={related.image || "/placeholder-image.jpg"}
+                  alt={related.title || "Default Image"}
+                  className="w-full h-40 object-cover rounded-md mb-4"
+                />
+                <h3 className="text-xl font-bold">{related.title || "Untitled"}</h3>
+                <p className="text-sm text-gray-600">
+                  {related.description || "No description available."}
+                </p>
+                <Link href={`/news/${related.id}`}>
+                  <a className="text-blue-500 hover:underline text-sm font-semibold">
+                    Read More &rarr;
+                  </a>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>
   );
-}
-
-// Predefine static paths
-export async function generateStaticParams() {
-  const response = await fetch("https://newsapp-najw.onrender.com/api/news/");
-  const articles = await response.json();
-
-  return articles.map((article) => ({
-    id: article.id.toString(),
-  }));
 }
