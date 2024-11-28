@@ -1,12 +1,12 @@
-"use client"; // Enable client-side rendering for the component
+"use client"; // Enable client-side rendering
 
 import Link from "next/link";
-import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import LeftSidebar from '../../../components/LeftSidebar';
-import RightSidebar from '../../../components/RightSidebar';
-import StoryCoverage from '../../../components/StoryCoverage';
-import RelatedNews from '../../../components/RelatedNews'; // Import RelatedNews component
+import Image from "next/image";
+import { useEffect, useState } from "react";
+import LeftSidebar from "../../../components/LeftSidebar";
+import RightSidebar from "../../../components/RightSidebar";
+import StoryCoverage from "../../../components/StoryCoverage";
+import RelatedNews from "../../../components/RelatedNews";
 
 // Utility function to calculate time ago
 function getTimeAgo(dateString) {
@@ -17,37 +17,40 @@ function getTimeAgo(dateString) {
   const daysAgo = Math.floor(hoursAgo / 24);
 
   if (daysAgo > 0) {
-    return `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
+    return `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
   } else {
-    return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+    return `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
   }
 }
 
 export default function NewsDetails({ params }) {
-  const { id: articleId } = params; // Get 'id' from route parameters
+  const { id: articleId } = params; // Dynamic parameter
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch the main article details and related news
     const fetchArticleDetails = async () => {
       try {
-        const articleResponse = await fetch(`http://127.0.0.1:8000/api/news/${articleId}/`);
+        const articleResponse = await fetch(
+          `https://newsapp-najw.onrender.com/api/news/${articleId}/`
+        );
         if (!articleResponse.ok) {
-          throw new Error(`Failed to fetch article details: ${articleResponse.statusText}`);
+          throw new Error(`Failed to fetch article: ${articleResponse.statusText}`);
         }
         const articleData = await articleResponse.json();
         setArticle(articleData);
 
-        const relatedResponse = await fetch(`http://127.0.0.1:8000/api/news/${articleId}/related/`);
+        const relatedResponse = await fetch(
+          `https://newsapp-najw.onrender.com/api/news/${articleId}/related/`
+        );
         if (!relatedResponse.ok) {
-          throw new Error(`Failed to fetch related articles: ${relatedResponse.statusText}`);
+          throw new Error(`Failed to fetch related articles`);
         }
         const relatedData = await relatedResponse.json();
         setRelatedArticles(relatedData);
       } catch (error) {
-        console.error("Error fetching article or related news:", error);
+        console.error("Error fetching article data:", error);
       } finally {
         setLoading(false);
       }
@@ -57,7 +60,7 @@ export default function NewsDetails({ params }) {
   }, [articleId]);
 
   if (loading) {
-    return <p>Loading...</p>; // Display a loading message or spinner
+    return <p>Loading...</p>;
   }
 
   if (!article) {
@@ -67,17 +70,15 @@ export default function NewsDetails({ params }) {
   return (
     <div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
-        {/* Left Sidebar - 25% width */}
         <div className="col-span-3">
           <LeftSidebar articleId={params.id} />
         </div>
 
-        {/* Main Content - 50% width */}
         <section className="col-span-6 bg-white p-6">
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
               <Image
-                src={article.image.startsWith('http') ? article.image : `http://127.0.0.1:8000${article.image}`}
+                src={article.image.startsWith("http") ? article.image : `/default-image.jpg`}
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"
               />
@@ -85,12 +86,11 @@ export default function NewsDetails({ params }) {
             <p className="text-gray-600">{getTimeAgo(article.published_at)}, {article.location}</p>
             <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
 
-            {/* Display Tags */}
             {article.tags && article.tags.length > 0 && (
               <div className="mt-1 mb-6">
                 <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag, index) => (
-                    <Link 
+                    <Link
                       key={index}
                       href={`/news?tag=${tag}`}
                       className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"
@@ -110,16 +110,14 @@ export default function NewsDetails({ params }) {
             </div>
             <p className="mb-6">{article.content}</p>
           </div>
-          <StoryCoverage  />
+          <StoryCoverage />
         </section>
 
-        {/* Right Sidebar - 25% width */}
         <div className="col-span-3">
           <RightSidebar />
         </div>
       </div>
 
-      {/* Related News Section */}
       {relatedArticles.length > 0 && (
         <div className="mt-8">
           <RelatedNews articles={relatedArticles} />
@@ -128,3 +126,14 @@ export default function NewsDetails({ params }) {
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  const response = await fetch("https://newsapp-najw.onrender.com/api/news/");
+  const articles = await response.json();
+
+  return articles.map((article) => ({
+    id: article.id.toString(),
+  }));
+}
+
+export const dynamicParams = false;
