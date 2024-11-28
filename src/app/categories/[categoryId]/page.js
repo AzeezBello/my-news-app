@@ -1,5 +1,6 @@
 // app/categories/[categoryId]/page.js
 
+"use client"; // Mark this file as a Client Component
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
