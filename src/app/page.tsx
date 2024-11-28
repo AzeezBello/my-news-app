@@ -10,7 +10,7 @@ import PersonalizedNewsFeed from '../components/PersonalizedNewsFeed';
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [news, setNews] = useState([]);
-  const [filters, setFilters] = useState({ category: '', location: '' });
+  const [filters] = useState({ category: '', location: '' });
 
   useEffect(() => {
     let query = '';

@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 
 export default function AskVTAI() {
-  const [activeTab, setActiveTab] = useState('Last Day');
+  // const [activeTab, setActiveTab] = useState('Last Day');
   const [question, setQuestion] = useState('');
 
   const suggestedQuestions = [

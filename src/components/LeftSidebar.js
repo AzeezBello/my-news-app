@@ -2,13 +2,13 @@
 
 "use client";
 import { useEffect, useState } from 'react';
-import DailyIndex from './DailyIndex';
+// import DailyIndex from './DailyIndex';
 import CoverageDetails from './CoverageDetails';
 import ExchangeRate from './ExchangeRate';
 
 export default function LeftSidebar({ articleId }) {
-  const [indexValue, setIndexValue] = useState(20);
-  const [sentiment, setSentiment] = useState('Serious');
+  // const [indexValue, setIndexValue] = useState(20);
+  // const [sentiment, setSentiment] = useState('Serious');
 
   useEffect(() => {
     // You can update this state with real data from an API call if available
@@ -21,7 +21,7 @@ export default function LeftSidebar({ articleId }) {
       <ExchangeRate />
 
       {/* Daily Index Section */}
-      <DailyIndex indexValue={indexValue} sentiment={sentiment} />
+      {/* <DailyIndex indexValue={indexValue} sentiment={sentiment} /> */}
 
       {/* Coverage Details Section */}
       <CoverageDetails
