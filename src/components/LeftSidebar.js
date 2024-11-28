@@ -7,8 +7,6 @@ import CoverageDetails from './CoverageDetails';
 import ExchangeRate from './ExchangeRate';
 
 export default function LeftSidebar({ articleId }) {
-  // const [indexValue, setIndexValue] = useState(20);
-  // const [sentiment, setSentiment] = useState('Serious');
 
   useEffect(() => {
     // You can update this state with real data from an API call if available

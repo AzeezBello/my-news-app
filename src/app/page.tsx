@@ -15,7 +15,6 @@ export default function Home() {
   useEffect(() => {
     let query = '';
     if (filters.category) query += `category=${filters.category}&`;
-    if (filters.location) query += `location=${filters.location}&`;
 
     fetch(`https://my-news-app-gy7u.onrender.com/api/news/?${query}`)
       .then(response => response.json())
