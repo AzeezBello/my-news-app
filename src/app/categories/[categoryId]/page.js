@@ -1,7 +1,22 @@
-"use client";
+// app/categories/[categoryId]/page.js
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import Image from 'next/image';
+import Image from "next/image";
+
+export async function generateStaticParams() {
+  const res = await fetch("http://127.0.0.1:8000/api/categories/");
+  if (!res.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+
+  const categories = await res.json();
+
+  // Return an array of category IDs as params
+  return categories.map((category) => ({
+    categoryId: category.id.toString(),
+  }));
+}
 
 export default function CategoryDetails({ params }) {
   const { categoryId } = params; // Get 'categoryId' from 'params'
@@ -21,7 +36,6 @@ export default function CategoryDetails({ params }) {
           return response.json();
         })
         .then((data) => {
-          console.log("Fetched Category Data:", data);
           setCategory(data);
 
           // Fetch news based on IDs
@@ -35,12 +49,10 @@ export default function CategoryDetails({ params }) {
               )
             )
               .then((news) => {
-                console.log("Fetched news:", news);
                 setPosts(news);
                 setLoading(false);
               })
-              .catch((error) => {
-                console.error("Error fetching news:", error);
+              .catch(() => {
                 setLoading(false);
                 setError("Failed to fetch news.");
               });
@@ -49,8 +61,7 @@ export default function CategoryDetails({ params }) {
             setLoading(false);
           }
         })
-        .catch((error) => {
-          console.error("Error fetching category details:", error);
+        .catch(() => {
           setLoading(false);
           setError("Failed to fetch category details.");
         });
@@ -78,11 +89,7 @@ export default function CategoryDetails({ params }) {
       <div className="flex items-center mb-6">
         {category.image && (
           <Image
-            src={
-              category.image.startsWith("http")
-                ? category.image
-                : `http://127.0.0.1:8000${category.image}`
-            }
+            src={category.image}
             alt={category.name}
             className="w-16 h-16 rounded-full object-cover mr-4"
           />
@@ -95,15 +102,8 @@ export default function CategoryDetails({ params }) {
         {posts.length > 0 ? (
           posts.map((post) => (
             <div key={post.id} className="bg-white p-4 rounded-lg shadow-md">
-              {/* Ensure image fallback */}
               <Image
-                src={
-                  post.image && post.image.startsWith("http")
-                    ? post.image
-                    : post.image
-                    ? `http://127.0.0.1:8000${post.image}`
-                    : "/placeholder-image.jpg"
-                }
+                src={post.image || "/placeholder-image.jpg"}
                 alt={post.title || "Default Image"}
                 className="w-full h-40 object-cover rounded-md mb-4"
               />
