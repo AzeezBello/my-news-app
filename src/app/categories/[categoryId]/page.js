@@ -1,37 +1,64 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
-// Generate static params for dynamic route
-export async function generateStaticParams() {
-  const res = await fetch("https://newsapp-najw.onrender.com/api/categories/");
-  const categories = await res.json();
+export default function CategoryDetails({ params }) {
+  const { categoryId } = params; // Get 'categoryId' from route parameters
+  const [category, setCategory] = useState(null);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  return categories.map((category) => ({
-    categoryId: category.id.toString(),
-  }));
-}
+  useEffect(() => {
+    const fetchCategoryDetails = async () => {
+      try {
+        // Fetch category details
+        const categoryRes = await fetch(`http://127.0.0.1:8000/api/categories/${categoryId}/`);
+        if (!categoryRes.ok) {
+          throw new Error(`Category not found: ${categoryRes.statusText}`);
+        }
+        const categoryData = await categoryRes.json();
+        setCategory(categoryData);
 
-// Fetch data for a specific category
-export default async function CategoryDetails({ params }) {
-  const { categoryId } = params;
-
-  // Fetch category details
-  const categoryRes = await fetch(`https://newsapp-najw.onrender.com/api/categories/${categoryId}/`);
-  if (!categoryRes.ok) {
-    return <p>Category not found.</p>;
-  }
-  const category = await categoryRes.json();
-
-  // Fetch news articles for this category
-  const articles = [];
-  if (category.articles && category.articles.length > 0) {
-    for (const articleId of category.articles) {
-      const articleRes = await fetch(`https://newsapp-najw.onrender.com/api/news/${articleId}/`);
-      if (articleRes.ok) {
-        const article = await articleRes.json();
-        articles.push(article);
+        // Fetch articles
+        const articles = [];
+        if (categoryData.articles && categoryData.articles.length > 0) {
+          for (const articleId of categoryData.articles) {
+            const articleRes = await fetch(`http://127.0.0.1:8000/api/news/${articleId}/`);
+            if (articleRes.ok) {
+              const articleData = await articleRes.json();
+              articles.push(articleData);
+            }
+          }
+        }
+        setPosts(articles);
+      } catch (err) {
+        console.error("Error fetching category or articles:", err);
+        setError("Failed to load category or articles.");
+      } finally {
+        setLoading(false);
       }
-    }
+    };
+
+    fetchCategoryDetails();
+  }, [categoryId]);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-red-500">
+        <p>{error}</p>
+      </div>
+    );
+  }
+
+  if (!category) {
+    return <p className="text-center text-gray-500">Category not found.</p>;
   }
 
   return (
@@ -52,8 +79,8 @@ export default async function CategoryDetails({ params }) {
 
       {/* Posts Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {articles.length > 0 ? (
-          articles.map((post) => (
+        {posts.length > 0 ? (
+          posts.map((post) => (
             <div key={post.id} className="bg-white p-4 rounded-lg shadow-md">
               <Image
                 src={
@@ -77,9 +104,7 @@ export default async function CategoryDetails({ params }) {
             </div>
           ))
         ) : (
-          <p className="col-span-full text-center text-gray-500">
-            No posts available for this category.
-          </p>
+          <p className="col-span-full text-center text-gray-500">No posts available for this category.</p>
         )}
       </div>
     </div>
