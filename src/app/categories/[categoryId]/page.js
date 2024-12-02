@@ -1,3 +1,5 @@
+"use client"; // Mark the component as a Client Component
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
