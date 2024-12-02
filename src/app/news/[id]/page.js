@@ -1,17 +1,17 @@
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
 
 // Generate static params for dynamic route
 export async function generateStaticParams() {
   const res = await fetch("https://newsapp-najw.onrender.com/api/news/");
-  const newsArticles = await res.json();
+  const articles = await res.json();
 
-  return newsArticles.map((article) => ({
+  return articles.map((article) => ({
     id: article.id.toString(),
   }));
 }
 
-// Fetch data for individual article
+// Fetch data for a specific article
 export default async function NewsDetails({ params }) {
   const { id } = params;
 
@@ -22,7 +22,7 @@ export default async function NewsDetails({ params }) {
   }
   const article = await articleRes.json();
 
-  // Fetch related news
+  // Fetch related articles
   const relatedRes = await fetch(`https://newsapp-najw.onrender.com/api/news/${id}/related/`);
   const relatedArticles = relatedRes.ok ? await relatedRes.json() : [];
 
@@ -30,69 +30,59 @@ export default async function NewsDetails({ params }) {
     <div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Left Sidebar */}
-        <div className="col-span-3">Left Sidebar</div>
+        <div className="col-span-3">
+          <div>Left Sidebar Content</div>
+        </div>
 
         {/* Main Content */}
         <section className="col-span-6 bg-white p-6">
-          <div className="grid grid-cols-1 gap-4">
+          <div>
             {article.image && (
               <Image
-                src={article.image}
+                src={article.image.startsWith("http") ? article.image : `http://127.0.0.1:8000${article.image}`}
                 alt={article.title}
-                className="w-full h-70 object-cover mb-1"
+                className="w-full h-70 object-cover mb-4"
               />
             )}
-            <p className="text-gray-600">{article.published_at}, {article.location}</p>
-            <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
+            <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+            <p>{article.content}</p>
 
             {/* Tags */}
-            {article.tags && (
-              <div className="flex flex-wrap gap-2 mt-4">
-                {article.tags.map((tag, idx) => (
-                  <Link key={idx} href={`/news?tag=${tag}`}>
-                    <a className="bg-gray-200 px-3 py-1 rounded-full text-sm">
+            {article.tags && article.tags.length > 0 && (
+              <div>
+                {article.tags.map((tag, index) => (
+                  <Link key={index} href={`/news?tag=${tag}`}>
+                    <a className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm mr-2">
                       {tag}
                     </a>
                   </Link>
                 ))}
               </div>
             )}
-
-            <h2 className="text-2xl font-bold mt-6">News Summary</h2>
-            <p>{article.content}</p>
           </div>
         </section>
 
         {/* Right Sidebar */}
-        <div className="col-span-3">Right Sidebar</div>
+        <div className="col-span-3">
+          <div>Right Sidebar Content</div>
+        </div>
       </div>
 
-      {/* Related Articles */}
-      {relatedArticles.length > 0 && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">Related Articles</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {relatedArticles.map((related) => (
-              <div key={related.id} className="bg-white p-4 rounded-lg shadow-md">
-                <Image
-                  src={related.image || "/placeholder-image.jpg"}
-                  alt={related.title || "Default Image"}
-                  className="w-full h-40 object-cover rounded-md mb-4"
-                />
-                <h3 className="text-xl font-bold">{related.title || "Untitled"}</h3>
-                <p className="text-sm text-gray-600">
-                  {related.description || "No description available."}
-                </p>
-                <Link href={`/news/${related.id}`}>
-                  <a className="text-blue-500 hover:underline text-sm font-semibold">
-                    Read More &rarr;
-                  </a>
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Related News Section */}
+      <div>
+        <h2 className="text-2xl font-bold">Related News</h2>
+        {relatedArticles.length > 0 ? (
+          relatedArticles.map((related) => (
+            <div key={related.id}>
+              <Link href={`/news/${related.id}`}>
+                <a>{related.title}</a>
+              </Link>
+            </div>
+          ))
+        ) : (
+          <p>No related news available.</p>
+        )}
+      </div>
     </div>
   );
 }
