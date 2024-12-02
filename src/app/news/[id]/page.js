@@ -1,4 +1,4 @@
-
+"use client"; // Mark the component as a Client Component
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
@@ -23,17 +23,8 @@ function getTimeAgo(dateString) {
   }
 }
 
-export async function generateStaticParams() {
-  const res = await fetch("https://newsapp-najw.onrender.com/api/news/");
-  const articles = await res.json();
-
-  return articles.map((article) => ({
-    id: article.id.toString(),
-  }));
-}
-
 export default function NewsDetails({ params }) {
-  const { id: articleId } = params;
+  const { id: articleId } = params; // Extract article ID from params
   const [article, setArticle] = useState(null);
   const [relatedArticles, setRelatedArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -42,7 +33,7 @@ export default function NewsDetails({ params }) {
     const fetchArticleDetails = async () => {
       try {
         const articleResponse = await fetch(
-          `https://newsapp-najw.onrender.com/api/news/${articleId}/`
+          `http://127.0.0.1:8000/api/news/${articleId}/`
         );
         if (!articleResponse.ok) {
           throw new Error(`Failed to fetch article details: ${articleResponse.statusText}`);
@@ -51,7 +42,7 @@ export default function NewsDetails({ params }) {
         setArticle(articleData);
 
         const relatedResponse = await fetch(
-          `https://newsapp-najw.onrender.com/api/news/${articleId}/related/`
+          `http://127.0.0.1:8000/api/news/${articleId}/related/`
         );
         if (!relatedResponse.ok) {
           throw new Error(`Failed to fetch related articles: ${relatedResponse.statusText}`);
@@ -86,12 +77,18 @@ export default function NewsDetails({ params }) {
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
               <Image
-                src={article.image.startsWith("http") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
+                src={
+                  article.image.startsWith("http")
+                    ? article.image
+                    : `http://127.0.0.1:8000${article.image}`
+                }
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"
               />
             )}
-            <p className="text-gray-600">{getTimeAgo(article.published_at)}, {article.location}</p>
+            <p className="text-gray-600">
+              {getTimeAgo(article.published_at)}, {article.location}
+            </p>
             <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
             <p className="mb-6">{article.content}</p>
           </div>
