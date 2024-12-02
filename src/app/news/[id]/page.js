@@ -5,39 +5,39 @@ import RightSidebar from "../../../components/RightSidebar";
 import StoryCoverage from "../../../components/StoryCoverage";
 import RelatedNews from "../../../components/RelatedNews";
 
-// Server-side function to fetch article details and related news
-export async function getServerSideProps(context) {
-  const { id } = context.params;
+// Fetch article details and related news on the server
+async function fetchArticleAndRelatedNews(articleId) {
+  const baseUrl = "https://newsapp-najw.onrender.com/api";
 
   try {
-    // Fetch article details
-    const articleRes = await fetch(`http://127.0.0.1:8000/api/news/${id}/`);
-    if (!articleRes.ok) {
-      throw new Error(`Failed to fetch article with id: ${id}`);
-    }
+    // Fetch article
+    const articleRes = await fetch(`${baseUrl}/news/${articleId}/`);
+    if (!articleRes.ok) throw new Error("Failed to fetch article.");
     const article = await articleRes.json();
 
     // Fetch related news
-    const relatedRes = await fetch(`http://127.0.0.1:8000/api/news/${id}/related/`);
+    const relatedRes = await fetch(`${baseUrl}/news/${articleId}/related/`);
     const relatedArticles = relatedRes.ok ? await relatedRes.json() : [];
 
-    return {
-      props: {
-        article,
-        relatedArticles,
-      },
-    };
+    return { article, relatedArticles };
   } catch (error) {
     console.error("Error fetching data:", error);
-    return {
-      notFound: true, // Show 404 page if there's an error
-    };
+    return { article: null, relatedArticles: [] };
   }
 }
 
-export default function NewsDetails({ article, relatedArticles }) {
+export default async function NewsDetails({ params }) {
+  const { id: articleId } = params;
+
+  // Fetch data on the server
+  const { article, relatedArticles } = await fetchArticleAndRelatedNews(articleId);
+
   if (!article) {
-    return <p className="text-center text-gray-500">Article not found.</p>;
+    return (
+      <div className="text-center text-gray-500">
+        <p>Article not found.</p>
+      </div>
+    );
   }
 
   return (
@@ -52,7 +52,7 @@ export default function NewsDetails({ article, relatedArticles }) {
         <section className="col-span-6 bg-white p-6">
           {article.image && (
             <Image
-              src={article.image.startsWith("http") ? article.image : `http://127.0.0.1:8000${article.image}`}
+              src={article.image.startsWith("http") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
               alt={article.title}
               width={600}
               height={400}
@@ -60,7 +60,7 @@ export default function NewsDetails({ article, relatedArticles }) {
             />
           )}
           <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
-          <p>{article.content}</p>
+          <p className="text-gray-600">{article.content}</p>
           <StoryCoverage />
         </section>
 
