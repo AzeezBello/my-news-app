@@ -1,4 +1,4 @@
-import Link from "next/link";
+
 import Image from "next/image";
 import LeftSidebar from "../../../components/LeftSidebar";
 import RightSidebar from "../../../components/RightSidebar";
