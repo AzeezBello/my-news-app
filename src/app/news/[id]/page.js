@@ -1,3 +1,5 @@
+
+
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,7 +24,7 @@ function getTimeAgo(dateString) {
 }
 
 export async function generateStaticParams() {
-  const res = await fetch("http://127.0.0.1:8000/api/news/");
+  const res = await fetch("https://newsapp-najw.onrender.com/api/news/");
   const articles = await res.json();
 
   return articles.map((article) => ({
@@ -40,7 +42,7 @@ export default function NewsDetails({ params }) {
     const fetchArticleDetails = async () => {
       try {
         const articleResponse = await fetch(
-          `http://127.0.0.1:8000/api/news/${articleId}/`
+          `https://newsapp-najw.onrender.com/api/news/${articleId}/`
         );
         if (!articleResponse.ok) {
           throw new Error(`Failed to fetch article details: ${articleResponse.statusText}`);
@@ -49,7 +51,7 @@ export default function NewsDetails({ params }) {
         setArticle(articleData);
 
         const relatedResponse = await fetch(
-          `http://127.0.0.1:8000/api/news/${articleId}/related/`
+          `https://newsapp-najw.onrender.com/api/news/${articleId}/related/`
         );
         if (!relatedResponse.ok) {
           throw new Error(`Failed to fetch related articles: ${relatedResponse.statusText}`);
@@ -84,7 +86,7 @@ export default function NewsDetails({ params }) {
           <div className="grid grid-cols-1 gap-4">
             {article.image && (
               <Image
-                src={article.image.startsWith("http") ? article.image : `http://127.0.0.1:8000${article.image}`}
+                src={article.image.startsWith("http") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
                 alt={article.title}
                 className="w-full h-70 object-cover mb-1"
               />

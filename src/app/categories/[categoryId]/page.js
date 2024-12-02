@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 
 export async function generateStaticParams() {
-  const res = await fetch("http://127.0.0.1:8000/api/categories/");
+  const res = await fetch("https://newsapp-najw.onrender.com/api/categories/");
   const categories = await res.json();
 
   return categories.map((category) => ({
@@ -21,7 +21,7 @@ export default function CategoryDetails({ params }) {
   useEffect(() => {
     const fetchCategoryDetails = async () => {
       try {
-        const response = await fetch(`http://127.0.0.1:8000/api/categories/${categoryId}/`);
+        const response = await fetch(`https://newsapp-najw.onrender.com/api/categories/${categoryId}/`);
         if (!response.ok) {
           throw new Error(`Failed to fetch category details: ${response.statusText}`);
         }
@@ -31,7 +31,7 @@ export default function CategoryDetails({ params }) {
         if (data.articles && data.articles.length > 0) {
           const articles = await Promise.all(
             data.articles.map((id) =>
-              fetch(`http://127.0.0.1:8000/api/news/${id}/`).then((res) => res.json())
+              fetch(`https://newsapp-najw.onrender.com/api/news/${id}/`).then((res) => res.json())
             )
           );
           setPosts(articles);
