@@ -24,17 +24,18 @@ function getTimeAgo(dateString) {
 export default function LocalNews() {
   const [news, setNews] = useState([]);
   const [fallbackNews, setFallbackNews] = useState([]);
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     // Fetch local news
-    fetch('https://newsapp-najw.onrender.com/api/news/?location=Local') // Adjust URL to match your API endpoint for local news
+    fetch(`${baseUrl}/api/news/?location=Local`) // Adjust URL to match your API endpoint for local news
       .then((response) => response.json())
       .then((data) => {
         if (data.length > 0) {
           setNews(data); // If local news is available
         } else {
           // Fetch most recent posts if no local news found
-          fetch('https://newsapp-najw.onrender.com/api/news/')
+          fetch(`${baseUrl}/api/news/`)
             .then((response) => response.json())
             .then((recentData) => setFallbackNews(recentData.slice(0, 3)));
         }
@@ -70,7 +71,7 @@ export default function LocalNews() {
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
               <Image
-                src={article.image.startsWith('http') ? article.image : `https://newsapp-najw.onrender.com${article.image}`}
+                src={article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />

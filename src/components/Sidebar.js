@@ -8,12 +8,12 @@ import NewsSummary from './NewsSummary'; // Import NewsSummary component
 export default function RightSidebar() {
   const [activeTab, setActiveTab] = useState('Last Day');
   const [categories, setCategories] = useState([]);
-
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   const newsSummaryTabs = ['Last Day', 'Last Week', 'Last Month'];
 
   useEffect(() => {
     // Fetch categories from the API
-    fetch('https://newsapp-najw.onrender.com/api/categories/')  // Adjust API URL as needed
+    fetch(`${baseUrl}/api/categories/`)  // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);

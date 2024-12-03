@@ -8,12 +8,13 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setError(null);
 
-    const response = await fetch('https://newsapp-najw.onrender.com/api/auth/login/', {
+    const response = await fetch(`${baseUrl}/api/auth/login/`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ username, password }),

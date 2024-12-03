@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 
 export default function NewsSummary({ activeTab, setActiveTab }) {
   const [newsSummary, setNewsSummary] = useState([]);
-
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
+  
   // Fetch news data whenever the activeTab changes
   useEffect(() => {
     // Define the base API URL
-    let url = 'https://newsapp-najw.onrender.com/api/news/';
+    let url = `${baseUrl}/api/news/`;
 
     // Adjust the URL based on the selected tab
     if (activeTab === 'Last Day') {

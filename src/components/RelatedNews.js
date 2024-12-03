@@ -79,7 +79,7 @@ export default function RelatedNews({ articles }) {
 
             {/* Image */}
             <Image
-              src={news.image.startsWith('http') ? news.image : `https://newsapp-najw.onrender.com/${news.image}`}
+              src={news.image.startsWith('http') ? news.image : `${baseUrl}/${news.image}`}
               alt={news.title}
               className="w-full h-40 object-cover mt-4 rounded-md"
             />
