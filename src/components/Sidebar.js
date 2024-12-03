@@ -13,7 +13,7 @@ export default function RightSidebar() {
 
   useEffect(() => {
     // Fetch categories from the API
-    fetch('http://127.0.0.1:8000/api/categories/')  // Adjust API URL as needed
+    fetch('https://newsapp-najw.onrender.com/api/categories/')  // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);

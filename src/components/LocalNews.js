@@ -27,14 +27,14 @@ export default function LocalNews() {
 
   useEffect(() => {
     // Fetch local news
-    fetch('http://newsapp-najw.onrender.com/api/news/?location=Local') // Adjust URL to match your API endpoint for local news
+    fetch('https://newsapp-najw.onrender.com/api/news/?location=Local') // Adjust URL to match your API endpoint for local news
       .then((response) => response.json())
       .then((data) => {
         if (data.length > 0) {
           setNews(data); // If local news is available
         } else {
           // Fetch most recent posts if no local news found
-          fetch('http://newsapp-najw.onrender.com/api/news/')
+          fetch('https://newsapp-najw.onrender.com/api/news/')
             .then((response) => response.json())
             .then((recentData) => setFallbackNews(recentData.slice(0, 3)));
         }
@@ -70,7 +70,7 @@ export default function LocalNews() {
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
               <Image
-                src={article.image.startsWith('http') ? article.image : `http://newsapp-najw.onrender.com${article.image}`}
+                src={article.image.startsWith('http') ? article.image : `https://newsapp-najw.onrender.com${article.image}`}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />

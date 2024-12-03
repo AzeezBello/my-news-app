@@ -60,7 +60,7 @@ export default function Footer() {
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <Image src="http://127.0.0.1:8000/media/images/logo.png" alt="Logo" className="h-10" />
+            <Image src="https://newsapp-najw.onrender.com/media/images/logo.png" alt="Logo" className="h-10" />
           </div>
 
           {/* Middle Links */}

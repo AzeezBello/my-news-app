@@ -35,7 +35,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <Image src="http://127.0.0.1:8000/media/images/logo.png" alt="Logo" className="h-8 mr-2 cursor-pointer" />
+            <Image src="https://newsapp-najw.onrender.com/media/images/logo.png" alt="Logo" className="h-8 mr-2 cursor-pointer" />
             {/* <span className="text-lg font-bold">VTNews</span> */}
           </Link>
         </div>

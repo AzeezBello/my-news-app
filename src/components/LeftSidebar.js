@@ -23,7 +23,7 @@ export default function LeftSidebar({ articleId }) {
 
       {/* Coverage Details Section */}
       <CoverageDetails
-        apiUrl={`http://127.0.0.1:8000/api/news/${articleId}/coverage/`}
+        apiUrl={`https://newsapp-najw.onrender.com/api/news/${articleId}/coverage/`}
       />
     </div>
   );

@@ -24,7 +24,7 @@ export default function LatestNews() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/api/news/') // Adjust URL to match your API endpoint
+    fetch('https://newsapp-najw.onrender.com//api/news/') // Adjust URL to match your API endpoint
       .then((response) => response.json())
       .then((data) => {
         // Sort news articles by publication date in descending order
@@ -65,7 +65,7 @@ export default function LatestNews() {
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
               <Image
-                src={article.image.startsWith('http') ? article.image : `http://127.0.0.1:8000${article.image}`}
+                src={article.image.startsWith('http') ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />
