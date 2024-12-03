@@ -16,7 +16,7 @@ export default function Home() {
     let query = '';
     if (filters.category) query += `category=${filters.category}&`;
 
-    fetch(`https://my-news-app-gy7u.onrender.com/api/news/?${query}`)
+    fetch(`https://newsapp-najw.onrender.com/api/news/?${query}`)
       .then(response => response.json())
       .then(data => setNews(data));
   }, [filters]);

@@ -52,7 +52,7 @@ export default async function NewsDetails({ params }) {
         <section className="col-span-6 bg-white p-6">
           {article.image && (
             <Image
-              src={article.image.startsWith("http") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
+              src={article.image.startsWith("https") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
               alt={article.title}
               width={600}
               height={400}
