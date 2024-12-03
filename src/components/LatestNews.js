@@ -22,16 +22,17 @@ function getTimeAgo(dateString) {
 
 export default function LatestNews() {
   const [news, setNews] = useState([]);
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
-    fetch('https://newsapp-najw.onrender.com//api/news/') // Adjust URL to match your API endpoint
+    fetch(`${baseUrl}/api/news/`) // Adjust URL to match your API endpoint
       .then((response) => response.json())
       .then((data) => {
         // Sort news articles by publication date in descending order
         const sortedData = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
         setNews(sortedData);
       });
-  }, []);
+  }, [baseUrl]);
 
   return (
     <div>

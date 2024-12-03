@@ -46,7 +46,7 @@ export default function TopNews() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
-    fetch('${baseUrl}/api/news/') // Adjust URL to match your API endpoint
+    fetch(`${baseUrl}/api/news/`) // Adjust URL to match your API endpoint
       .then((response) => response.json())
       .then((data) => {
         // Sort news articles by publication date in descending order
@@ -74,7 +74,7 @@ export default function TopNews() {
         {mainNews && (
           <div className="col-span-2 relative">
             <Image
-              src={mainNews.image?.startsWith('https') ? mainNews.image : `${baseUrl}/${mainNews.image}`}
+              src={mainNews.image?.startsWith('http') ? mainNews.image : `${baseUrl}/${mainNews.image}`}
               alt={mainNews.title}
               className="w-full h-96 object-cover rounded-md"
             />
@@ -98,7 +98,7 @@ export default function TopNews() {
               <h4 className="text-xl font-bold mt-2">{sideNews.title}</h4>
               <CoverageBar leftCoverage={38} sources={8} />
               <Image
-                src={sideNews.image?.startsWith('https') ? sideNews.image : `${baseUrl}/${sideNews.image}`}
+                src={sideNews.image?.startsWith('http') ? sideNews.image : `${baseUrl}/${sideNews.image}`}
                 alt={sideNews.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />
@@ -118,7 +118,7 @@ export default function TopNews() {
               <h5 className="text-lg font-bold mt-2">{item.title}</h5>
               <CoverageBar leftCoverage={50} sources={6} />
               <Image
-                src={item.image?.startsWith('https') ? item.image : `${baseUrl}/${item.image}`}
+                src={item.image?.startsWith('http') ? item.image : `${baseUrl}/${item.image}`}
                 alt={item.title}
                 className="w-full h-32 object-cover mt-4 rounded-md"
               />

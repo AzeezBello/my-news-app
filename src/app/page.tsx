@@ -11,12 +11,13 @@ export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [news, setNews] = useState([]);
   const [filters] = useState({ category: '', location: '' });
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     let query = '';
     if (filters.category) query += `category=${filters.category}&`;
 
-    fetch(`https://newsapp-najw.onrender.com/api/news/?${query}`)
+    fetch(`${baseUrl}/api/news/?${query}`)
       .then(response => response.json())
       .then(data => setNews(data));
   }, [filters]);

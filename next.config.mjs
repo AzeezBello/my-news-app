@@ -2,7 +2,13 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['https://newsapp-najw.onrender.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'newsapp-najw.onrender.com',
+        pathname: '/media/**',
+      },
+    ],
   },
 };
 
