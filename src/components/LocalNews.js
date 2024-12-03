@@ -40,7 +40,7 @@ export default function LocalNews() {
             .then((recentData) => setFallbackNews(recentData.slice(0, 3)));
         }
       });
-  }, []);
+  }, [baseUrl]);
 
   const displayNews = news.length > 0 ? news : fallbackNews;
 

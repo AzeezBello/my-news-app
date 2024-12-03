@@ -4,8 +4,6 @@ import { SiX } from 'react-icons/si'; // Import the new Twitter (X) icon
 import Image from 'next/image';
 
 export default function Footer() {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  
   return (
     <footer className="py-10">
       {/* Top Section */}

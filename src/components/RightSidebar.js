@@ -17,7 +17,7 @@ export default function RightSidebar() {
       .then((data) => {
         setCategories(data);
       });
-  }, []);
+  }, [baseUrl]);
 
   return (
     <div>
