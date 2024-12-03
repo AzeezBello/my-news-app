@@ -45,7 +45,7 @@ export default function TopNews() {
   const [news, setNews] = useState([]);
 
   useEffect(() => {
-    fetch('http://newsapp-najw.onrender.com/api/news/') // Adjust URL to match your API endpoint
+    fetch('https://newsapp-najw.onrender.com/api/news/') // Adjust URL to match your API endpoint
       .then((response) => response.json())
       .then((data) => {
         // Sort news articles by publication date in descending order
