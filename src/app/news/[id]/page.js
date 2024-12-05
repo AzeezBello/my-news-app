@@ -1,13 +1,12 @@
-
 import Image from "next/image";
 import LeftSidebar from "../../../components/LeftSidebar";
 import RightSidebar from "../../../components/RightSidebar";
 import StoryCoverage from "../../../components/StoryCoverage";
 import RelatedNews from "../../../components/RelatedNews";
 
-// Fetch article details and related news on the server
+// Fetch article details and related news
 async function fetchArticleAndRelatedNews(articleId) {
-  const baseUrl = "https://newsapp-najw.onrender.com/api";
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   try {
     // Fetch article
@@ -21,7 +20,7 @@ async function fetchArticleAndRelatedNews(articleId) {
 
     return { article, relatedArticles };
   } catch (error) {
-    console.error("Error fetching data:", error);
+    console.error("Error fetching data:", error.message);
     return { article: null, relatedArticles: [] };
   }
 }
@@ -41,28 +40,37 @@ export default async function NewsDetails({ params }) {
   }
 
   return (
-    <div>
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-12 gap-4">
+    <div className="container mx-auto">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Left Sidebar */}
         <div className="col-span-3">
           <LeftSidebar />
         </div>
 
         {/* Main Content */}
-        <section className="col-span-6 bg-white p-6">
+        <main className="col-span-6 bg-white p-6 rounded-md shadow-md">
+          {/* Article Image */}
           {article.image && (
             <Image
               src={article.image.startsWith("https") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
               alt={article.title}
               width={600}
               height={400}
-              className="w-full h-70 object-cover mb-1"
+              className="w-full h-auto object-cover rounded-md mb-4"
             />
           )}
-          <h1 className="text-4xl font-bold mb-2">{article.title}</h1>
-          <p className="text-gray-600">{article.content}</p>
-          <StoryCoverage />
-        </section>
+
+          {/* Article Title */}
+          <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+
+          {/* Article Content */}
+          <p className="text-gray-700 leading-relaxed">{article.content}</p>
+
+          {/* Story Coverage Section */}
+          <div className="mt-6">
+            <StoryCoverage />
+          </div>
+        </main>
 
         {/* Right Sidebar */}
         <div className="col-span-3">
@@ -71,10 +79,11 @@ export default async function NewsDetails({ params }) {
       </div>
 
       {/* Related News Section */}
-      {relatedArticles && relatedArticles.length > 0 && (
-        <div className="mt-8">
+      {relatedArticles.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-2xl font-bold mb-4">Related News</h2>
           <RelatedNews articles={relatedArticles} />
-        </div>
+        </section>
       )}
     </div>
   );
