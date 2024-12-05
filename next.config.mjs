@@ -10,6 +10,21 @@ const nextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      {
+        source: '/api/:path*', // Match any API route
+        has: [
+          {
+            type: 'host',
+            value: 'http://newsapp-najw.onrender.com', // Match any http request to the host
+          },
+        ],
+        destination: 'https://newsapp-najw.onrender.com/api/:path*',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
