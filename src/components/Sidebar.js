@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import AskVTAI from './AskVTAI';
 import TopTopics from './TopTopics';
 import SimilarNewsTopics from './SimilarNewsTopics';
-import NewsSummary from './NewsSummary'; // Import NewsSummary component
+// import NewsSummary from './NewsSummary'; 
 
 export default function RightSidebar() {
   const [activeTab, setActiveTab] = useState('Last Day');

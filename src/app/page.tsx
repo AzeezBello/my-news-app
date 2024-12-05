@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import TopNews from '../components/TopNews';
 import LatestNews from '../components/LatestNews';
-import LocalNews from '../components/LocalNews';
+// import LocalNews from '../components/LocalNews';
 import PersonalizedNewsFeed from '../components/PersonalizedNewsFeed';
 
 export default function Home() {
