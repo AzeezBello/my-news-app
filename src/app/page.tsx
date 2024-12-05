@@ -29,7 +29,7 @@ export default function Home() {
       <div className="lg:col-span-3 col-span-1">
         <TopNews />
         <PersonalizedNewsFeed />
-        <LocalNews />
+        {/* <LocalNews /> */}
         <LatestNews />
       </div>
 

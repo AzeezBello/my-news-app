@@ -23,7 +23,7 @@ export default function RightSidebar() {
   return (
     <div>
       {/* News Summary Section */}
-      <NewsSummary activeTab={activeTab} setActiveTab={setActiveTab} /> {/* Use NewsSummary Component */}
+      {/* <NewsSummary activeTab={activeTab} setActiveTab={setActiveTab} />  */}
 
       {/* Ask VT AI Section */}
       <AskVTAI activeTab={activeTab} setActiveTab={setActiveTab} newsSummaryTabs={newsSummaryTabs} />
