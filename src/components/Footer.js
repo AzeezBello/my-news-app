@@ -60,7 +60,9 @@ export default function Footer() {
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="flex items-center space-x-4">
-            <Image src={`${process.env.NEXT_PUBLIC_API_URL}/media/images/logo.png`} alt="Logo" className="h-10" />
+            <Link href="/" className="flex items-center">
+              <Image src='/images/logo.png' alt="Logo" className="h-10" />
+            </Link>
           </div>
 
           {/* Middle Links */}
