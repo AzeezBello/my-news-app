@@ -17,7 +17,7 @@ export default function Home() {
     let query = '';
     if (filters.category) query += `category=${filters.category}&`;
 
-    fetch(`${baseUrl}/api/news/?${query}`)
+    fetch(`${baseUrl}/news/?${query}`)
       .then(response => response.json())
       .then(data => setNews(data));
   }, [filters]);
