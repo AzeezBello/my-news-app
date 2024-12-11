@@ -1,6 +1,7 @@
 // components/Footer.js
 import { FaInstagram } from 'react-icons/fa'; // Import icons
 import { SiX } from 'react-icons/si'; // Import the new Twitter (X) icon
+import Link from 'next/link';
 import Image from 'next/image';
 
 export default function Footer() {
