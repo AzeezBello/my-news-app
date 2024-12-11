@@ -35,7 +35,7 @@ export default function Header() {
         {/* Logo */}
         <div className="flex items-center">
           <Link href="/" className="flex items-center">
-            <Image src={`${process.env.NEXT_PUBLIC_API_URL}/media/images/logo.png`} alt="Logo" className="h-8 mr-2 cursor-pointer" />
+            <Image src='/images/logo.png' alt="Logo" className="h-8 mr-2 cursor-pointer" />
             {/* <span className="text-lg font-bold">VTNews</span> */}
           </Link>
         </div>
