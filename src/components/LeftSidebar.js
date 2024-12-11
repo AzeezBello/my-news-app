@@ -7,6 +7,7 @@ import CoverageDetails from './CoverageDetails';
 import ExchangeRate from './ExchangeRate';
 
 export default function LeftSidebar({ articleId }) {
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
     // You can update this state with real data from an API call if available
@@ -23,7 +24,7 @@ export default function LeftSidebar({ articleId }) {
 
       {/* Coverage Details Section */}
       <CoverageDetails
-        apiUrl={`https://newsapp-najw.onrender.com/api/news/${articleId}/coverage/`}
+        apiUrl={`${baseUrl}/news/${articleId}/coverage/`}
       />
     </div>
   );
