@@ -46,7 +46,7 @@ export default function TopNews() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   useEffect(() => {
-    fetch(`${baseUrl}/api/news/`) // Adjust URL to match your API endpoint
+    fetch(`${baseUrl}/news/`) // Adjust URL to match your API endpoint
       .then((response) => response.json())
       .then((data) => {
         // Sort news articles by publication date in descending order

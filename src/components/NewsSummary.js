@@ -8,7 +8,7 @@ export default function NewsSummary({ activeTab, setActiveTab }) {
   // Fetch news data whenever the activeTab changes
   useEffect(() => {
     // Define the base API URL
-    let url = `${baseUrl}/api/news/`;
+    let url = `${baseUrl}/news/`;
 
     // Adjust the URL based on the selected tab
     if (activeTab === 'Last Day') {

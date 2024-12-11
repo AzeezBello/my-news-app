@@ -28,7 +28,7 @@ export default function LocalNews() {
 
   useEffect(() => {
     // Fetch local news
-    fetch(`${baseUrl}/api/news/?location=Local`) // Adjust URL to match your API endpoint for local news
+    fetch(`${baseUrl}/news/?location=Local`) // Adjust URL to match your API endpoint for local news
       .then((response) => response.json())
       .then((data) => {
         if (data.length > 0) {
