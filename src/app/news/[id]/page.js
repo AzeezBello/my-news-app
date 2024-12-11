@@ -29,7 +29,7 @@ export default async function NewsDetails({ params }) {
   const { id: articleId } = params;
 
   // Fetch data on the server
-  const { article, relatedArticles } = await fetchArticleAndRelatedNews(articleId);
+  const { article, relatedArticles, baseUrl } = await fetchArticleAndRelatedNews(articleId);
 
   if (!article) {
     return (

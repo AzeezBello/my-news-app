@@ -1,6 +1,6 @@
 "use client";
 import { FaBookmark } from "react-icons/fa";
-import Image from 'next/image';
+import Image from "next/image";
 
 // Utility function to calculate time ago
 function getTimeAgo(dateString) {
@@ -11,9 +11,9 @@ function getTimeAgo(dateString) {
   const daysAgo = Math.floor(hoursAgo / 24);
 
   if (daysAgo > 0) {
-    return `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago`;
+    return `${daysAgo} day${daysAgo > 1 ? "s" : ""} ago`;
   } else {
-    return `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+    return `${hoursAgo} hour${hoursAgo > 1 ? "s" : ""} ago`;
   }
 }
 
@@ -39,9 +39,9 @@ function CoverageBar({ coverage }) {
 }
 
 export default function RelatedNews({ articles }) {
-  console.log("Related Articles:", articles);  // Log to verify data
+  console.log("Related Articles:", articles); // Log to verify data
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
-  
+
   return (
     <div className="p-4 bg-gray-100">
       {/* Header */}
@@ -60,7 +60,7 @@ export default function RelatedNews({ articles }) {
             <div className="flex justify-between items-center mb-2">
               <span className="text-xs text-gray-600">
                 {news.categories && news.categories.length > 0
-                  ? news.categories.map((cat) => cat.name).join(', ')
+                  ? news.categories.map((cat) => cat.name).join(", ")
                   : "Uncategorized"}
               </span>
               <button className="text-gray-500">
@@ -75,15 +75,25 @@ export default function RelatedNews({ articles }) {
             <CoverageBar coverage={news.coverage || "50% left coverage"} />
             <div className="flex justify-between items-center mt-1 text-xs text-gray-600">
               <span>{news.coverage || "50% left coverage"}</span>
-              <span>{news.sources || 1} source{news.sources > 1 ? "s" : ""}</span>
+              <span>
+                {news.sources || 1} source{news.sources > 1 ? "s" : ""}
+              </span>
             </div>
 
             {/* Image */}
-            <Image
-              src={news.image.startsWith('http') ? news.image : `${baseUrl}/${news.image}`}
-              alt={news.title}
-              className="w-full h-40 object-cover mt-4 rounded-md"
-            />
+            {news.image && (
+              <Image
+                src={
+                  news.image.startsWith("http")
+                    ? news.image
+                    : `${baseUrl.replace(/\/$/, "")}${news.image}`
+                }
+                alt={news.title}
+                width={400}
+                height={200}
+                className="w-full h-40 object-cover mt-4 rounded-md"
+              />
+            )}
 
             {/* Date and Location */}
             <p className="text-xs text-gray-600 mt-2">
