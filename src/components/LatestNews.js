@@ -66,7 +66,7 @@ export default function LatestNews() {
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
               <Image
-                src={article.image.startsWith('http') ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
+                src={article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />

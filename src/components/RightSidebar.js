@@ -12,7 +12,7 @@ export default function RightSidebar() {
 
   useEffect(() => {
     // Fetch categories from the API
-    fetch(`${baseUrl}api/categories/`)  // Adjust API URL as needed
+    fetch(`${baseUrl}/categories/`)  // Adjust API URL as needed
       .then((response) => response.json())
       .then((data) => {
         setCategories(data);
