@@ -18,10 +18,10 @@ async function fetchArticleAndRelatedNews(articleId) {
     const relatedRes = await fetch(`${baseUrl}/news/${articleId}/related/`);
     const relatedArticles = relatedRes.ok ? await relatedRes.json() : [];
 
-    return { article, relatedArticles };
+    return { article, relatedArticles, baseUrl };
   } catch (error) {
     console.error("Error fetching data:", error.message);
-    return { article: null, relatedArticles: [] };
+    return { article: null, relatedArticles: [], baseUrl };
   }
 }
 
@@ -29,7 +29,7 @@ export default async function NewsDetails({ params }) {
   const { id: articleId } = params;
 
   // Fetch data on the server
-  const { article, relatedArticles } = await fetchArticleAndRelatedNews(articleId);
+  const { article, relatedArticles, baseUrl } = await fetchArticleAndRelatedNews(articleId);
 
   if (!article) {
     return (
@@ -52,7 +52,7 @@ export default async function NewsDetails({ params }) {
           {/* Article Image */}
           {article.image && (
             <Image
-              src={article.image.startsWith("https") ? article.image : `https://newsapp-najw.onrender.com/${article.image}`}
+              src={article.image.startsWith("https") ? article.image : `${baseUrl}/${article.image}`}
               alt={article.title}
               width={600}
               height={400}
