@@ -32,9 +32,6 @@ export default function TopTopics({ topics }) {
           </Link>
         ))}
       </div>
-      <Link href="/categories" className="text-blue-500 hover:underline mt-4 inline-block">
-        View More &rarr;
-      </Link>
     </div>
   );
 }
