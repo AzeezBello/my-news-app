@@ -66,7 +66,7 @@ export default function LatestNews() {
               <CoverageBar leftCoverage={article.leftCoverage || 50} sources={article.sources || 10} />
 
               <Image
-                src={article.image.startsWith('http') ? article.image : `${baseUrl}${article.image}`}
+                src={article.image_url}
                 alt={article.title}
                 className="w-full h-40 object-cover mt-4 rounded-md"
               />

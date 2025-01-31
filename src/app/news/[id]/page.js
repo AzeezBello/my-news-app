@@ -52,7 +52,7 @@ export default async function NewsDetails({ params }) {
           {/* Article Image */}
           {article.image && (
             <Image
-              src={article.image.startsWith("https") ? article.image : `${baseUrl}/${article.image}`}
+              src={article.image_url} 
               alt={article.title}
               width={600}
               height={400}

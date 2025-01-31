@@ -83,11 +83,7 @@ export default function RelatedNews({ articles }) {
             {/* Image */}
             {news.image && (
               <Image
-                src={
-                  news.image.startsWith("http")
-                    ? news.image
-                    : `${baseUrl.replace(/\/$/, "")}${news.image}`
-                }
+                src={news.image_url}
                 alt={news.title}
                 width={400}
                 height={200}
