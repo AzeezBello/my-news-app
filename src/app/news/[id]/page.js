@@ -60,10 +60,12 @@ export default async function NewsDetails({ params }) {
             />
           )}
 
+          {/* Article Title */}
+          <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+          
           {/* Display Tags */}
           {article.tags && article.tags.length > 0 && (
               <div className="mt-4">
-                <h2 className="text-xl font-bold mb-2">Tags</h2>
                 <div className="flex flex-wrap gap-2">
                   {article.tags.map((tag, index) => (
                     <span
@@ -77,8 +79,7 @@ export default async function NewsDetails({ params }) {
               </div>
             )}
 
-          {/* Article Title */}
-          <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+          <h3 className="text-2xl font-bold mt-6 mb-1">News summary</h3>
           <div className="flex flex-col space-y-1 mb-6">
             <div className="h-0.5 w-full bg-gray-700"></div>
             <div className="h-0.5 w-full bg-gray-400"></div>
