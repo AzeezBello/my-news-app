@@ -94,7 +94,7 @@ export default function Footer() {
 
         {/* Bottom Links with Copyright */}
         <div className="mt-4 container mx-auto flex justify-between items-center text-sm text-gray-600 px-4">
-          <div>© 2024 All Rights Reserved</div>
+          <div>© 2025 All Rights Reserved</div>
           <div>
             <a href="#" className="mr-4 hover:underline">Privacy Policy</a>
             <a href="#" className="hover:underline">Terms of Use</a>

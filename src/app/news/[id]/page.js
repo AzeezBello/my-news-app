@@ -48,7 +48,7 @@ export default async function NewsDetails({ params }) {
         </div>
 
         {/* Main Content */}
-        <main className="col-span-6 bg-white p-6 rounded-md shadow-md">
+        <main className="col-span-6 bg-white p-6">
           {/* Article Image */}
           {article.image && (
             <Image
@@ -60,8 +60,30 @@ export default async function NewsDetails({ params }) {
             />
           )}
 
+          {/* Display Tags */}
+          {article.tags && article.tags.length > 0 && (
+              <div className="mt-4">
+                <h2 className="text-xl font-bold mb-2">Tags</h2>
+                <div className="flex flex-wrap gap-2">
+                  {article.tags.map((tag, index) => (
+                    <span
+                      key={index}
+                      className="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
           {/* Article Title */}
           <h1 className="text-4xl font-bold mb-4">{article.title}</h1>
+          <div className="flex flex-col space-y-1 mb-6">
+            <div className="h-0.5 w-full bg-gray-700"></div>
+            <div className="h-0.5 w-full bg-gray-400"></div>
+            <div className="h-0.5 w-full bg-gray-200"></div>
+          </div>
 
           {/* Article Content */}
           <p className="text-gray-700 leading-relaxed">{article.content}</p>
@@ -81,7 +103,6 @@ export default async function NewsDetails({ params }) {
       {/* Related News Section */}
       {relatedArticles.length > 0 && (
         <section className="mt-8">
-          <h2 className="text-2xl font-bold mb-4">Related News</h2>
           <RelatedNews articles={relatedArticles} />
         </section>
       )}
