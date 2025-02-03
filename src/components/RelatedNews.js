@@ -42,7 +42,7 @@ export default function RelatedNews({ articles }) {
   console.log("Related Articles:", articles); // Log to verify data
 
   return (
-    <div className="p-4 bg-gray-100">
+    <div>
       {/* Header */}
       <h2 className="text-2xl font-bold">Related News</h2>
       <div className="flex flex-col space-y-1 mb-4">
