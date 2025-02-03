@@ -5,7 +5,6 @@ import Image from 'next/image';
 
 
 export default function TopTopics({ topics }) {
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
   
   return (
     <div>
@@ -21,7 +20,7 @@ export default function TopTopics({ topics }) {
             <div className="flex justify-between items-center p-2 bg-white rounded-lg shadow-sm cursor-pointer hover:shadow-lg transition-shadow duration-300">
               <div className="flex items-center space-x-3">
                 <Image
-                  src={topic.image ? (topic.image.startsWith('https') ? topic.image : `${baseUrl}/${topic.image}`) : '/placeholder-icon.png'}
+                  src={topic.image_url}
                   alt={topic.name}
                   className="w-8 h-8 rounded-full object-cover"
                 />
