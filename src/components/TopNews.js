@@ -53,7 +53,7 @@ export default function TopNews() {
         const sortedData = data.sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
         setNews(sortedData.slice(0, 5)); // Get the top 5 latest news articles
       });
-  }, []);
+  }, [baseUrl]);
 
   if (!news || news.length === 0) return <p>Loading...</p>;
 

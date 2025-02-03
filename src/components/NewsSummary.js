@@ -24,7 +24,7 @@ export default function NewsSummary({ activeTab, setActiveTab }) {
       .then((response) => response.json())
       .then((data) => setNewsSummary(data.slice(0, 2))) // Limit to 2 items for summary
       .catch((error) => console.error("Error fetching news summary:", error));
-  }, [activeTab]);
+  }, [baseUrl, activeTab]);
 
   const newsSummaryTabs = ['Last Day', 'Last Week', 'Last Month'];
 

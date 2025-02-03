@@ -40,7 +40,6 @@ function CoverageBar({ coverage }) {
 
 export default function RelatedNews({ articles }) {
   console.log("Related Articles:", articles); // Log to verify data
-  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   return (
     <div className="p-4 bg-gray-100">

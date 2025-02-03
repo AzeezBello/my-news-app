@@ -20,7 +20,7 @@ export default function Home() {
     fetch(`${baseUrl}/news/?${query}`)
       .then(response => response.json())
       .then(data => setNews(data));
-  }, [filters]);
+  }, [baseUrl,filters]);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
